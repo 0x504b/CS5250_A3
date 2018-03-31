@@ -42,7 +42,19 @@ int onebyte_release(struct inode *inode, struct file *filep)
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
      /*please complete the function on your own*/
-     copy_to_user(buf, onebyte_data, 1);
+     int satoshi_1 = 0
+
+     satoshi_1 = copy_to_user(buf, onebyte_data, 1);
+
+     if(satoshi_1 == 0)
+     {
+          return 1;
+     }
+     else 
+     {
+          printk(KERN_ALERT "Did not succeed...\n");
+          return -EFAULT;
+     }
 
 }
 
@@ -64,11 +76,8 @@ static int onebyte_init(void)
      return result;
 
      // allocate one byte of memory for storage
-
      // kmalloc is just like malloc, the second parameter is
-
      // the type of memory to be allocated.
-
      // To release the memory allocated by kmalloc, use kfree.
 
      onebyte_data = kmalloc(sizeof(char), GFP_KERNEL);
@@ -76,17 +85,13 @@ static int onebyte_init(void)
      if (!onebyte_data) {
           onebyte_exit();
           // cannot allocate memory
-
           // return no memory error, negative signify a failure
-
      }
 
      return -ENOMEM;
 
      // initialize the value to be X
-
      *onebyte_data = 'X';
-
      printk(KERN_ALERT "This is a onebyte device module\n");
 
      return 0;
