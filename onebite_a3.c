@@ -42,7 +42,7 @@ int onebyte_release(struct inode *inode, struct file *filep)
 ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 {
      /*please complete the function on your own*/
-     int satoshi_1 = 0
+     int satoshi_1 = 0;
 
      satoshi_1 = copy_to_user(buf, onebyte_data, 1);
 
@@ -52,7 +52,7 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
      }
      else 
      {
-          printk(KERN_ALERT "Did not succeed...\n");
+          printk(KERN_ALERT "Did not succeed READ...\n");
           return -EFAULT;
      }
 
@@ -61,7 +61,19 @@ ssize_t onebyte_read(struct file *filep, char *buf, size_t count, loff_t *f_pos)
 ssize_t onebyte_write(struct file *filep, const char *buf, size_t count, loff_t *f_pos)
 {
      /*please complete the function on your own*/
-     copy_from_user(onebyte_data, buf, 1);
+     int satoshi_2 = 0;
+
+     satoshi_2 = copy_from_user(onebyte_data, buf, 1);
+
+     if(satoshi_2 == 0)
+     {
+          return 1;
+     }
+     else
+     {
+          printk(KERN_ALERT "Did not succeed WRITE...\n");
+          return -EFAULT;
+     }
 }
 
 static int onebyte_init(void)
